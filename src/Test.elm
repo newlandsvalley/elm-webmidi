@@ -81,19 +81,6 @@ midiState = Signal.foldp stepMidi defaultMidiState midiMessages
 main : Signal Html
 main = Signal.map view midiState
    
-{-   
-showMsg : MidiMessage -> Html
-showMsg msg = 
-   case msg of 
-     MI min -> 
-        p [] [ text min.name ]
-     MN note -> 
-        p [] [ text (toString note.pitch) ]
 
-
-main : Signal Html
-main =
-  Signal.map showMsg midiMessages
--}
               
 
