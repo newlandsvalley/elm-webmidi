@@ -59,7 +59,7 @@ midiNoteS: Signal MidiNote
 midiNoteS =  
    Native.WebMidi.note
 
-{-| The input connect signal. 
+{-| The midi input connect signal. 
     Generated when a MIDI device is connected or when an Elm-WebMidi program starts up
     and there are already decices connected. 
 -}
@@ -67,7 +67,7 @@ midiInputS: Signal MidiConnect
 midiInputS =
    Native.WebMidi.connect
 
-{-| The disconnect signal. 
+{-| The midi disconnect signal. 
     Generated when a MIDI device is disconnected.
 -}
 midiDisconnectS: Signal MidiDisconnect
