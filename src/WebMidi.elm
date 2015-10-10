@@ -5,8 +5,6 @@ module WebMidi
    , midiInputS
    , midiDisconnectS
    , midiNoteS
-   , defaultNote
-   , defaultInput
    ) where
 
 {-|  Library for  working with midi input devices,
@@ -20,9 +18,6 @@ module WebMidi
 # Signals
 @docs midiInputS, midinoteS, midiDisconnectS
 
-# defaults
-@docs defaultNote, defaultInput
-
 -}
 
 -- native WebMidi implementation
@@ -31,7 +26,7 @@ import Signal exposing (Signal)
 
 {-| Representation of a basic MIDI note message which indicates whether it is being switched on or off,
     the pitch, and the velocity (e.g. keyboard pressure).  (Velocity of 0 is synonymous with note off)
-    sourceId is the identity of the owning input device that produced the note
+    sourceId is the identity of the owning input device that produced the note.
 -}
 type alias MidiNote =
   { noteOn    : Bool
@@ -57,36 +52,24 @@ type alias MidiDisconnect =
   }
 
 
-defaultNote : MidiNote
-defaultNote = 
-  { noteOn = False
-  , pitch = 0
-  , velocity = 0
-  , timestamp = 0
-  , sourceId = ""
-  }
-
-defaultInput : MidiConnect
-defaultInput = 
-  { portType = ""
-  , id = ""
-  , manufacturer = ""
-  , name = "no device connected"
-  , version = ""
-  }
-
-
-{-| The midi note signal. -}
+{-| The midi note signal. 
+    Generated, for example when a MIDI keyboard key is depressed or released. 
+-}
 midiNoteS: Signal MidiNote
 midiNoteS =  
    Native.WebMidi.note
 
-{-| The input connect signal. -}
+{-| The input connect signal. 
+    Generated when a MIDI device is connected or when an Elm-WebMidi program starts up
+    and there are already decices connected. 
+-}
 midiInputS: Signal MidiConnect
 midiInputS =
    Native.WebMidi.connect
 
-{-| The disconnect signal. -}
+{-| The disconnect signal. 
+    Generated when a MIDI device is disconnected.
+-}
 midiDisconnectS: Signal MidiDisconnect
 midiDisconnectS =
    Native.WebMidi.disconnect

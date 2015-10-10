@@ -15,11 +15,8 @@ type alias MidiInputState =
 
 type alias MidiState = List MidiInputState
 
-defaultMidiMessage : MidiMessage
-defaultMidiMessage = MC defaultInput
-
-defaultMidiState : MidiState
-defaultMidiState = []
+initialMidiState : MidiState
+initialMidiState = []
 
 -- Merged signals
 notes : Signal MidiMessage
@@ -38,9 +35,15 @@ midiMessages = mergeMany [inputs, notes, disconnects]
 stepMidi : MidiMessage -> MidiState -> MidiState
 stepMidi mm ms = 
    case mm of 
-     -- an incoming MIDI input connection - add it to the list
+     -- an incoming MIDI input connection - add it to the list if it's not there already
      MC midiConnect -> 
-        { midiInput = midiConnect, noteM = Nothing } :: ms
+        let alreadyListed = List.any(\is -> is.midiInput.id == midiConnect.id)  ms
+        in
+          if alreadyListed
+            then
+              ms
+            else
+              { midiInput = midiConnect, noteM = Nothing } :: ms
      -- an incoming note - find the appropriate MIDI iput id and add the note to it
      MN midiNote ->
         let updateInputState inputState =
@@ -76,7 +79,7 @@ view ms =
 
 -- Main
 midiState : Signal MidiState
-midiState = Signal.foldp stepMidi defaultMidiState midiMessages
+midiState = Signal.foldp stepMidi initialMidiState midiMessages
 
 main : Signal Html
 main = Signal.map view midiState
