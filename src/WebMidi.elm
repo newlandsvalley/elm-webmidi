@@ -7,10 +7,9 @@ module WebMidi
    , midiNoteS
    ) where
 
-{-|  Library for  working with midi input devices,
+{-|  Library for working with midi input devices,
 
 # Definition
-@docs WebMidi
 
 # Data Types
 @docs MidiNote, MidiConnect, MidiDisconnect
