@@ -16,7 +16,7 @@ module WebMidi
 @docs MidiNote, MidiConnect, MidiDisconnect
 
 # Signals
-@docs midiInputS, midinoteS, midiDisconnectS
+@docs midiInputS, midiNoteS, midiDisconnectS
 
 -}
 
