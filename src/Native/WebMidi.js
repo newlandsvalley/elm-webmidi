@@ -50,14 +50,14 @@ Elm.Native.WebMidi.make = function(localRuntime) {
       // request MIDI access and then connect
       if (navigator.requestMIDIAccess) {
          navigator.requestMIDIAccess({
-           sysex: false // this defaults to 'false' and we won't be covering sysex in this article. 
+           sysex: false // this defaults to 'false' anyway.
          }).then(onMIDISuccess)
       } 
     }
 
     // Set up all the signals we expect if MIDI is supported
     function onMIDISuccess(midiAccess) {
-        console.log('MIDI Access Object', midiAccess);
+        // console.log('MIDI Access Object', midiAccess);
 
         var inputs = midiAccess.inputs.values();       
         // loop over any register inputs and listen for data on each
@@ -83,7 +83,7 @@ Elm.Native.WebMidi.make = function(localRuntime) {
         noteOn  = (velocity > 0) && (type == 144);	
         sourceId = event.srcElement.id;
 
-        console.log('type: ', type, ' pitch:', pitch, ' velocity:', velocity, ' timestamp:', ts, ' noteOn:', noteOn, ' noteOff:', noteOff); 
+        // console.log('type: ', type, ' pitch:', pitch, ' velocity:', velocity, ' timestamp:', ts, ' noteOn:', noteOn, ' noteOff:', noteOff); 
 
         if (noteOff) {
           localRuntime.notify(note.id, mnote(false,pitch,velocity,ts,sourceId));
@@ -100,13 +100,13 @@ Elm.Native.WebMidi.make = function(localRuntime) {
 	if(type == "input") {
            console.log("State change:", state);
            if (state == "connected") {
-              console.log("State Change Connect" + " name", name, "port", port, "id", id, "state", state);
+              // console.log("State Change Connect" + " name", name, "port", port, "id", id, "state", state);
               localRuntime.notify(connect.id, mconnect(port.type,port.id,port.manufacturer,port.name,port.version));    
               // register midi note callbacks on this new input      
               port.onmidimessage = onMIDIMessage;   
            }
            else if  (state == "disconnected") {
-              console.log("State Change Disconnect" + " name", name, "port", port, "id", id, "state", state);
+              // console.log("State Change Disconnect" + " name", name, "port", port, "id", id, "state", state);
               localRuntime.notify(disconnect.id, mdisconnect(port.type, port.id)); 
            }
         }
@@ -115,9 +115,11 @@ Elm.Native.WebMidi.make = function(localRuntime) {
    
     // register an input device
     function registerInput(input){
+        /*
 	console.log("Input port : [ type:'" + input.type + "' id: '" + input.id + 
 	    "' manufacturer: '" + input.manufacturer + "' name: '" + input.name + 
 	    "' version: '" + input.version + "']");   
+        */
         localRuntime.notify(connect.id, mconnect(input.type,input.id,input.manufacturer,input.name,input.version));  
     }
 
