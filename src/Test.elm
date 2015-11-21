@@ -1,6 +1,6 @@
 import WebMidi exposing (..)
-import Signal
 import Signal exposing (..)
+import Task exposing (Task)
 import Html exposing (..)
 import List exposing (..)
 import Graphics.Element exposing (..)
@@ -76,6 +76,14 @@ view ms =
     [ let inputs = List.map viewPortAndNote ms
       in ul [] inputs
     ] 
+
+-- Plumbing - initialise the MIDI connection
+myTaskMailbox : Mailbox (Task () ())
+myTaskMailbox = mailbox WebMidi.init
+
+port myTaskPort : Signal (Task () ())
+port myTaskPort = 
+  myTaskMailbox.signal
 
 -- Main
 midiState : Signal MidiState

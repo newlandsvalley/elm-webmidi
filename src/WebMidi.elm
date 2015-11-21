@@ -5,6 +5,7 @@ module WebMidi
    , midiInputS
    , midiDisconnectS
    , midiNoteS
+   , init
    ) where
 
 {-|  Library for working with midi input devices,
@@ -17,11 +18,15 @@ module WebMidi
 # Signals
 @docs midiInputS, midiNoteS, midiDisconnectS
 
+# Functions
+@docs init
+
 -}
 
 -- native WebMidi implementation
 import Native.WebMidi
 import Signal exposing (Signal)
+import Task exposing (Task)
 
 {-| Representation of a basic MIDI note message which indicates whether it is being switched on or off,
     the pitch, and the velocity (e.g. keyboard pressure).  (Velocity of 0 is synonymous with note off)
@@ -66,12 +71,16 @@ midiInputS: Signal MidiConnect
 midiInputS =
    Native.WebMidi.connect
 
-{-| The midi disconnect signal. 
+{-| The midi input disconnect signal. 
     Generated when a MIDI device is disconnected.
 -}
 midiDisconnectS: Signal MidiDisconnect
 midiDisconnectS =
    Native.WebMidi.disconnect
+
+{-| Initialise MIDI to set up the signals -}
+init : Task x ()
+init = Native.WebMidi.init () 
 
 
 

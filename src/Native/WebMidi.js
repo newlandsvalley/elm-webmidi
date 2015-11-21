@@ -7,12 +7,11 @@ Elm.Native.WebMidi.make = function(localRuntime) {
 
     var Utils = Elm.Native.Utils.make(localRuntime);
     var NS = Elm.Native.Signal.make(localRuntime); 
+    var Task = Elm.Native.Task.make(localRuntime);
 
     var note = NS.input('WebMidi.note', mnote(false,0,0,0,""));
     var connect = NS.input('WebMidi.connect', mconnect("","","","",""));
     var disconnect = NS.input('WebMidi.disconnect', mdisconnect("",""));
-
-    var init = midiConnect()
 
     // constructor function for Elm tuples
     function mnote(v, w, x, y, z)	{
@@ -45,8 +44,23 @@ Elm.Native.WebMidi.make = function(localRuntime) {
 	  };
     }
 
+    /* I intend eventually to return init defined like this.  In other words
+     * it would allow us to detect our midi devices as an Elm Task.
+     * Unfortunately it crashes in Elm runtime's stepTask in Elm 0.15
+     * See https://github.com/elm-lang/core/issues/240
+     */
+    function init ()  {
+        console.log("init: " )
+            return Task.asyncFunction(function (callback) {
+                midiConnect();
+                callback(Task.succeed(Utils.Tuple0));
+            });
+        };
+
 
     function midiConnect () {
+
+      console.log('MIDIConnect');
       // request MIDI access and then connect
       if (navigator.requestMIDIAccess) {
          navigator.requestMIDIAccess({
@@ -115,11 +129,11 @@ Elm.Native.WebMidi.make = function(localRuntime) {
    
     // register an input device
     function registerInput(input){
-        /*
+        /* */
 	console.log("Input port : [ type:'" + input.type + "' id: '" + input.id + 
 	    "' manufacturer: '" + input.manufacturer + "' name: '" + input.name + 
 	    "' version: '" + input.version + "']");   
-        */
+        /* */
         localRuntime.notify(connect.id, mconnect(input.type,input.id,input.manufacturer,input.name,input.version));  
     }
 
@@ -127,7 +141,8 @@ Elm.Native.WebMidi.make = function(localRuntime) {
     return localRuntime.Native.WebMidi.values = {
         note: note,
         connect: connect,
-        disconnect: disconnect
+        disconnect: disconnect,
+        init: init
     };
 };
 
