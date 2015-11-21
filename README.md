@@ -13,6 +13,11 @@ n.b. I have little or no experience yet of javascript, elm or Web-MIDI and so th
 
 Note that at the time of writing, Chrome is the only browser to implememt the Web-Midi interface.
 
+Issues
+------
+
+At the moment, if you import WebMidi, then initialisation of connected MIDI devices happens automatically.  This is not necessarily the right thing to do, but was made necessary under Elm 0.15 because of [this issue](https://github.com/elm-lang/core/issues/240) (fixed in Elm 0.16).  I think it is probably preferable to have an explicit init() method, which is in fact what I've done in an embedded version of elm-webmidi [here](https://github.com/newlandsvalley/elm-soundfont).
+
  
 
 
