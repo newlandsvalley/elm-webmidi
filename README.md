@@ -1,4 +1,4 @@
-elm-WebMidi
+elm-webmidi
 ===========
 
 This is an experimental elm library for [Web-MIDI](http://www.w3.org/TR/webmidi/) input.  It provides signals for:
