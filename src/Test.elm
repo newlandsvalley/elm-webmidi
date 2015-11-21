@@ -49,7 +49,7 @@ stepMidi mm ms =
         let updateInputState inputState =
           if midiNote.sourceId == inputState.midiInput.id 
             then 
-              { inputState | noteM <- Just midiNote }
+              { inputState | noteM = Just midiNote }
             else 
               inputState          
         in
