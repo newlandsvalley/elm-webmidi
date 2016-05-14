@@ -1,6 +1,22 @@
 elm-webmidi
 ===========
 
+deprecated as from elm 0.17
+---------------------------
+
+This comment from Evan:
+
+> Sorry to keep this in limbo for so long. I am moving towards the plan outlined [here](https://groups.google.com/forum/#!searchin/elm-dev/native/elm-dev/1JW6wknkDIo/H9ZnS71BCAAJ) and discussed a bit further in [the 0.17 announcement](http://elm-lang.org/blog/farewell-to-frp#what-is-next-).
+
+> Ultimately, I think this kind of stuff should live in elm-lang/midi so I think the right way to proceed is to design a fully Task based API that just does low-level bindings in a module called Midi.LowLevel. Similar to how elm-lang/websocket has WebSocket.LowLevel that can be used to define any sort of effect manager.
+
+in response:
+
+The possibility of wrapping the web platform API is gradually becoming a reality. The rules for wrapping native javascript are changing; Signals have vanished.  It is not yet clear to me how Evan wishes to involve the community in this project.
+
+for elm 0.16
+------------
+
 This is an experimental elm library for [Web-MIDI](http://www.w3.org/TR/webmidi/) input compatible with elm 0.16.  It makes quite full use of signals, providing them for:
 
 *   Connecting MIDI input devices
