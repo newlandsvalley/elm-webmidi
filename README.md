@@ -29,6 +29,11 @@ It uses a (now) old-fashioned Native interface to the Web-MIDI platform API.  Th
 
 Note that at the time of writing, Chrome is the only browser to implememt the Web-Midi interface.
 
+for elm 0.18
+------------
+
+I waited for over a year for half-promises about documenting Effect Managers or about wrapping the web platform API to come to fruition, but nothing happened. So in the end, as a temporary measure, I moved this project to [elm-webmidi-ports](https://github.com/newlandsvalley/elm-webmidi-ports).  I am _still_ waiting patiently to see the web platform API supported natively in Elm along the lines suggested by Evan in his note above.  There appears to be very little interest.
+
 
 
  
